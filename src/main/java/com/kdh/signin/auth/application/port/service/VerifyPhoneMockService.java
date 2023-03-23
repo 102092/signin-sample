@@ -1,7 +1,6 @@
 package com.kdh.signin.auth.application.port.service;
 
 import com.kdh.signin.auth.domain.Phone;
-import com.kdh.signin.common.CipherHelper;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class VerifyPhoneService {
+public class VerifyPhoneMockService {
 
     public boolean verity(Phone phone) {
         // mock verify

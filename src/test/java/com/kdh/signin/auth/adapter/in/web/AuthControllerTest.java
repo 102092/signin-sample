@@ -1,10 +1,8 @@
 package com.kdh.signin.auth.adapter.in.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kdh.signin.auth.adapter.in.web.AuthController;
-import com.kdh.signin.auth.adapter.in.web.SignUpRequest;
 import com.kdh.signin.auth.application.port.service.AuthService;
-import com.kdh.signin.auth.application.port.service.VerifyPhoneService;
+import com.kdh.signin.auth.application.port.service.VerifyPhoneMockService;
 import com.kdh.signin.auth.domain.Phone;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +28,7 @@ class AuthControllerTest {
     MockMvc mockMvc;
 
     @MockBean
-    VerifyPhoneService phoneService;
+    VerifyPhoneMockService phoneService;
 
     @MockBean
     AuthService authService;

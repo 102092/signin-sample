@@ -1,10 +1,9 @@
 package com.kdh.signin.auth.adapter.in.web;
 
-import com.kdh.signin.*;
 import com.kdh.signin.auth.application.port.in.SignUpCommand;
 import com.kdh.signin.auth.application.port.out.PhoneVerifyResponse;
 import com.kdh.signin.auth.application.port.service.AuthService;
-import com.kdh.signin.auth.application.port.service.VerifyPhoneService;
+import com.kdh.signin.auth.application.port.service.VerifyPhoneMockService;
 import com.kdh.signin.auth.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final VerifyPhoneService phoneService;
+    private final VerifyPhoneMockService phoneService;
 
     private final AuthService authService;
 
