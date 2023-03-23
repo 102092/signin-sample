@@ -41,4 +41,13 @@ class AuthControllerTest {
                 jsonPath("$.phone_number").value("010-1234-4567")
             );
     }
+
+    @Test
+    void throwExceptionIfPhoneNumberIsNotValid() throws Exception {
+        mockMvc.perform(post("/auth/phone")
+                .header("Content-Type", "application/json")
+                .content("010-1234-45671"))
+            .andExpectAll(
+                status().is4xxClientError());
+    }
 }
