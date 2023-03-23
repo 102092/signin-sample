@@ -1,4 +1,4 @@
-package com.kdh.signin;
+package com.kdh.signin.auth.domain;
 
 import lombok.Getter;
 
