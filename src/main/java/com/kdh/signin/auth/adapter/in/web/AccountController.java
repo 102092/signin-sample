@@ -2,7 +2,7 @@ package com.kdh.signin.auth.adapter.in.web;
 
 import com.kdh.signin.auth.application.port.in.SignUpCommand;
 import com.kdh.signin.auth.application.port.out.PhoneVerifyResponse;
-import com.kdh.signin.auth.application.port.service.AuthService;
+import com.kdh.signin.auth.application.port.service.AccountService;
 import com.kdh.signin.auth.application.port.service.VerifyPhoneMockService;
 import com.kdh.signin.auth.domain.*;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class AuthController {
+public class AccountController {
 
     private final VerifyPhoneMockService phoneService;
 
-    private final AuthService authService;
+    private final AccountService authService;
 
     @PostMapping(value = "auth/phone")
     public ResponseEntity<PhoneVerifyResponse> checkPhoneNumber(@RequestBody String phoneNumber) {

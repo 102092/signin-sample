@@ -1,12 +1,13 @@
 package com.kdh.signin.auth.application.port.service;
 
 import com.kdh.signin.auth.application.port.in.SignUpCommand;
+import com.kdh.signin.auth.domain.Identifier;
 import com.kdh.signin.auth.domain.User;
 
 /**
  * @author han
  */
-public interface AuthUseCase {
+public interface AccountUseCase {
 
     /**
      * @param command
@@ -18,7 +19,7 @@ public interface AuthUseCase {
      * @param identifier
      * @return
      */
-    User findMyInfo(String identifier);
+    User findMyInfo(Identifier identifier);
 
     void resetPassword(String key);
 }
