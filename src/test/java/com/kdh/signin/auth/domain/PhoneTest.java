@@ -1,5 +1,6 @@
-package com.kdh.signin;
+package com.kdh.signin.auth.domain;
 
+import com.kdh.signin.auth.domain.Phone;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
