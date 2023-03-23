@@ -1,0 +1,12 @@
+### Send POST request with json body
+POST http://localhost:8085/auth/signup
+Content-Type: application/json
+
+{
+  "email": "test@gmail.com",
+  "nick_name" : "hello",
+  "password" : "password",
+  "name" : "meme",
+  "phone_number" : "010-1234-5678",
+  "token" : "verified"
+}
