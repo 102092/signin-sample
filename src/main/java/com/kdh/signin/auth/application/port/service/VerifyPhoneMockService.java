@@ -12,7 +12,15 @@ public class VerifyPhoneMockService implements VerifyPhonePort {
 
     @Override
     public String verify(String phoneNumber) {
-        // mockin
+        // mocking
         return "verified";
+    }
+
+    @Override
+    public boolean verifyToken(String token) {
+        if (token == null || token.isEmpty()) {
+            return false;
+        }
+        return true;
     }
 }

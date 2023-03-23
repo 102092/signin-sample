@@ -10,4 +10,6 @@ public interface VerifyPhonePort {
      * @return verified token of phoneNumber from external service
      */
     String verify(String phoneNumber);
+
+    boolean verifyToken(String token);
 }

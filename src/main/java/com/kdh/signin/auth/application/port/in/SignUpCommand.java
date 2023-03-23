@@ -20,12 +20,15 @@ public class SignUpCommand {
 
     private Phone phone;
 
+    private String token;
+
     @Builder
-    protected SignUpCommand(Email email, NickName nickName, Password password, Name name, Phone phone) {
+    protected SignUpCommand(Email email, NickName nickName, Password password, Name name, Phone phone, String token) {
         this.email = email;
         this.nickName = nickName;
         this.password = password;
         this.name = name;
         this.phone = phone;
+        this.token = token;
     }
 }
