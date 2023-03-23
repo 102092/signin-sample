@@ -5,5 +5,9 @@ package com.kdh.signin.auth.application.port.out;
  */
 public interface VerifyPhonePort {
 
-    boolean verify(String phoneNumber);
+    /**
+     * @param phoneNumber
+     * @return verified token of phoneNumber from external service
+     */
+    String verify(String phoneNumber);
 }

@@ -1,9 +1,8 @@
 package com.kdh.signin.auth.adapter.in.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kdh.signin.auth.application.port.service.AuthService;
+import com.kdh.signin.auth.application.port.service.AccountService;
 import com.kdh.signin.auth.application.port.service.VerifyPhoneMockService;
-import com.kdh.signin.auth.domain.Phone;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -21,8 +20,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author han
  */
 
-@WebMvcTest(controllers = AuthController.class)
-class AuthControllerTest {
+@WebMvcTest(controllers = AccountController.class)
+class AccountControllerTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -31,7 +30,7 @@ class AuthControllerTest {
     VerifyPhoneMockService phoneService;
 
     @MockBean
-    AuthService authService;
+    AccountService authService;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -39,7 +38,7 @@ class AuthControllerTest {
     @Test
     void checkPhoneNumber() throws Exception {
         //given
-        given(phoneService.verify(any(String.class))).willReturn(Boolean.TRUE);
+        given(phoneService.verify(any(String.class))).willReturn("token");
 
         //then
         mockMvc.perform(post("/auth/phone")
@@ -47,7 +46,7 @@ class AuthControllerTest {
                 .content("010-1234-4567"))
             .andExpectAll(
                 status().isOk(),
-                jsonPath("$.verified").value(Boolean.TRUE),
+                jsonPath("$.token").value("token"),
                 jsonPath("$.phone_number").value("010-1234-4567")
             );
     }
@@ -55,13 +54,12 @@ class AuthControllerTest {
     @Test
     void signUpSuccess() throws Exception {
 
-        SignUpRequest signUpRequest = new SignUpRequest("test@gmail.com", "hello", "name", "password", "010-1234-5678");
+        SignUpRequest signUpRequest = new SignUpRequest("test@gmail.com", "hello", "name", "password", "010-1234-5678", "token");
 
         mockMvc.perform(post("/auth/signup")
                 .header("Content-Type", "application/json")
                 .content(objectMapper.writeValueAsString(signUpRequest)))
             .andExpect(
-                status().isOk()
-            );
+                status().isOk());
     }
 }

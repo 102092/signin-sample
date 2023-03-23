@@ -9,12 +9,12 @@ import lombok.Getter;
 @Getter
 public class PhoneVerifyResponse {
 
-    private final boolean verified;
+    private final String token;
 
     private final String phoneNumber;
 
-    public PhoneVerifyResponse(boolean verified, String phoneNumber) {
-        this.verified = verified;
+    public PhoneVerifyResponse(String token, String phoneNumber) {
+        this.token = token;
         this.phoneNumber = phoneNumber;
     }
 }

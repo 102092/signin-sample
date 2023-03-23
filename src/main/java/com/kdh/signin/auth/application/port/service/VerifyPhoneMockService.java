@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 public class VerifyPhoneMockService implements VerifyPhonePort {
 
     @Override
-    public boolean verify(String phoneNumber) {
-        // mocking, always return true
-        return true;
+    public String verify(String phoneNumber) {
+        // mockin
+        return "verified";
     }
 }
