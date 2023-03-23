@@ -1,6 +1,6 @@
 package com.kdh.signin.auth.application.port.service;
 
-import com.kdh.signin.auth.domain.Phone;
+import com.kdh.signin.auth.application.port.out.VerifyPhonePort;
 import org.springframework.stereotype.Service;
 
 /**
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class VerifyPhoneMockService {
+public class VerifyPhoneMockService implements VerifyPhonePort {
 
-    public boolean verity(Phone phone) {
-        // mock verify
-
+    @Override
+    public boolean verify(String phoneNumber) {
+        // mocking, always return true
         return true;
     }
 }
