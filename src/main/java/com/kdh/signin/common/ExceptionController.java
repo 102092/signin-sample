@@ -1,4 +1,4 @@
-package com.kdh.signin;
+package com.kdh.signin.common;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

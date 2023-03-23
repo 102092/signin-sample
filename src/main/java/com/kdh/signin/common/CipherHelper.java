@@ -1,4 +1,4 @@
-package com.kdh.signin;
+package com.kdh.signin.common;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
