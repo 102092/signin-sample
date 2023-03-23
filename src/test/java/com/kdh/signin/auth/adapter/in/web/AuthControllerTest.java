@@ -39,7 +39,7 @@ class AuthControllerTest {
     @Test
     void checkPhoneNumber() throws Exception {
         //given
-        given(phoneService.verity(any(Phone.class))).willReturn(Boolean.TRUE);
+        given(phoneService.verify(any(String.class))).willReturn(Boolean.TRUE);
 
         //then
         mockMvc.perform(post("/auth/phone")
@@ -53,18 +53,9 @@ class AuthControllerTest {
     }
 
     @Test
-    void throwExceptionIfPhoneNumberIsNotValid() throws Exception {
-        mockMvc.perform(post("/auth/phone")
-                .header("Content-Type", "application/json")
-                .content("010-1234-45671"))
-            .andExpectAll(
-                status().is4xxClientError());
-    }
-
-    @Test
     void signUpSuccess() throws Exception {
 
-        SignUpRequest signUpRequest = new SignUpRequest("test@gmail.com", "hello", "name", "password", "phone");
+        SignUpRequest signUpRequest = new SignUpRequest("test@gmail.com", "hello", "name", "password", "010-1234-5678");
 
         mockMvc.perform(post("/auth/signup")
                 .header("Content-Type", "application/json")

@@ -24,9 +24,8 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(value = "auth/phone")
-    public ResponseEntity<PhoneVerifyResponse> checkPhoneNumber(@RequestBody String body) {
-        Phone phone = new Phone(body);
-        return ResponseEntity.ok(new PhoneVerifyResponse(phoneService.verity(phone), phone.getValue()));
+    public ResponseEntity<PhoneVerifyResponse> checkPhoneNumber(@RequestBody String phoneNumber) {
+        return ResponseEntity.ok(new PhoneVerifyResponse(phoneService.verify(phoneNumber), phoneNumber));
     }
 
     @PostMapping(value = "auth/signup")
