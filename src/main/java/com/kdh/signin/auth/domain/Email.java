@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 /**
  * @author han
  */
-public class Email {
+public class Email implements Identifier{
 
     private final static Pattern pattern  = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
 
@@ -20,5 +20,10 @@ public class Email {
             return value;
         }
         throw new IllegalArgumentException("Email seems not valid");
+    }
+
+    @Override
+    public String getUniqueValue() {
+        return this.value;
     }
 }
