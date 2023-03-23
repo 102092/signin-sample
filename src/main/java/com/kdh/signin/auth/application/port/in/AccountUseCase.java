@@ -1,6 +1,5 @@
-package com.kdh.signin.auth.application.port.service;
+package com.kdh.signin.auth.application.port.in;
 
-import com.kdh.signin.auth.application.port.in.SignUpCommand;
 import com.kdh.signin.auth.domain.Identifier;
 import com.kdh.signin.auth.domain.User;
 
@@ -11,9 +10,9 @@ public interface AccountUseCase {
 
     /**
      * @param command
-     * @return jwt token
+     * @return accountId
      */
-    String signUp(SignUpCommand command);
+    Long signUp(SignUpCommand command);
 
     /**
      * @param identifier

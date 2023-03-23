@@ -21,7 +21,7 @@ public class AccountController {
 
     private final VerifyPhoneMockService phoneService;
 
-    private final AccountService authService;
+    private final AccountService accountService;
 
     @PostMapping(value = "auth/phone")
     public ResponseEntity<PhoneVerifyResponse> checkPhoneNumber(@RequestBody String phoneNumber) {
@@ -42,8 +42,13 @@ public class AccountController {
             .password(password)
             .name(name)
             .phone(phone)
+            .token(request.getToken())
             .build();
 
-        return ResponseEntity.ok("hi");
+        if (!phoneService.verifyToken(command.getToken())) {
+            throw new IllegalArgumentException("This token is not valid");
+        }
+
+        return ResponseEntity.ok(String.valueOf(accountService.signUp(command)));
     }
 }
