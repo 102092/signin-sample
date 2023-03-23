@@ -36,7 +36,7 @@ public class User {
     private final Name name;
 
     /**
-     * 유저 전화번호 (encrypted)
+     * 유저 전화번호, 식별자로 사용 가능 (encrypted, unique)
      */
     private final Phone phone;
 
