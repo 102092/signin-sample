@@ -1,0 +1,27 @@
+### sign up
+POST http://localhost:8085/auth/signup
+Content-Type: application/json
+
+{
+  "email": "test@gmail.com",
+  "nick_name" : "hello",
+  "password" : "password",
+  "name" : "meme",
+  "phone_number" : "010-1234-5678",
+  "token" : "verified"
+}
+
+### sign in (get jwt token)
+POST http://localhost:8085/auth/signin
+Content-Type: application/json
+
+{
+  "email": "test@gmail.com",
+  "password" : "password",
+  "phone_number" : "010-1234-5678"
+}
+
+### get user info
+GET http://localhost:8085/auth/info/1
+Content-Type: application/json
+x-auth-token: eyJhbGciOiJIUzUxMiJ9.eyJpIjoxfQ.1CHbz5rG9hIK5kOUCkfnqbIXFWEY4kIQxtuBNe4L1Ka2VQdiEtb0qjBZRrgUodRfTxP0ZoPRj5gZy2Wl81izVA

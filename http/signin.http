@@ -1,0 +1,9 @@
+### sign in
+POST http://localhost:8085/auth/signin
+Content-Type: application/json
+
+{
+  "email": "test@gmail.com",
+  "password" : "password",
+  "phone_number" : "010-1234-5678"
+}

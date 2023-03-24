@@ -1,4 +1,4 @@
-### Send POST request with json body
+### sign up
 POST http://localhost:8085/auth/signup
 Content-Type: application/json
 
