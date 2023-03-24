@@ -56,9 +56,7 @@ public class JwtHelper {
         } catch (ExpiredJwtException eje) {
             throw new RuntimeException("This jwt is expired");
         } catch (Exception e) {
-            new RuntimeException("Decode jwt failed");
+            throw new RuntimeException("Decode jwt failed");
         }
-
-        return null;
     }
 }
