@@ -48,4 +48,14 @@ class AccountPersistenceAdapterTest {
 
         assertTrue(adapter.isSignUp(email, phone));
     }
+
+    @Test
+    void findByIdentifier() {
+        adapter.save(email, nickName, password, name, phone);
+
+        User byEmail = adapter.findByEmail(email);
+        User byPhone = adapter.findByPhone(phone);
+
+        assertEquals(byEmail.getId(), byPhone.getId());
+    }
 }
