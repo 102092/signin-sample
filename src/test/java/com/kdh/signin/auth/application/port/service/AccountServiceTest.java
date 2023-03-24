@@ -2,9 +2,11 @@ package com.kdh.signin.auth.application.port.service;
 
 import com.kdh.signin.auth.adapter.out.persistence.AccountPersistenceAdapter;
 import com.kdh.signin.auth.application.port.in.AccountUseCase;
+import com.kdh.signin.auth.application.port.in.ResetPasswordCommand;
 import com.kdh.signin.auth.application.port.in.SignInCommand;
 import com.kdh.signin.auth.application.port.in.SignUpCommand;
 import com.kdh.signin.auth.domain.*;
+import com.kdh.signin.common.BadRequestException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -85,5 +87,32 @@ class AccountServiceTest {
 
         //then
         verify(adapter, atLeastOnce()).findByPhone(any(Phone.class));
+    }
+
+    @Test
+    void throwExceptionWhenTryToChangeSamePassword() {
+        //given
+        ResetPasswordCommand command = mock(ResetPasswordCommand.class);
+        given(adapter.findByPhone(any(Phone.class))).willReturn(User.builder().id(new User.UserId(1L)).password(new Password("1")).build());
+        given(command.getPhone()).willReturn(new Phone("010-1234-5678"));
+        given(command.getPasswordForRest()).willReturn(new Password("1"));
+
+        //when
+        assertThrows(BadRequestException.class, () -> service.resetPassword(command));
+    }
+
+    @Test
+    void updatePasswordSuccess() {
+        //given
+        ResetPasswordCommand command = mock(ResetPasswordCommand.class);
+        given(adapter.findByPhone(any(Phone.class))).willReturn(User.builder().id(new User.UserId(1L)).password(new Password("1")).build());
+        given(command.getPhone()).willReturn(new Phone("010-1234-5678"));
+        given(command.getPasswordForRest()).willReturn(new Password("2"));
+
+        //when
+        service.resetPassword(command);
+
+        //then
+        verify(adapter, atLeastOnce()).updatePassword(any(User.class), any(Password.class));
     }
 }

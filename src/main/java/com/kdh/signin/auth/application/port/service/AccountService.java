@@ -2,10 +2,12 @@ package com.kdh.signin.auth.application.port.service;
 
 import com.kdh.signin.auth.adapter.out.persistence.AccountPersistenceAdapter;
 import com.kdh.signin.auth.application.port.in.AccountUseCase;
+import com.kdh.signin.auth.application.port.in.ResetPasswordCommand;
 import com.kdh.signin.auth.application.port.in.SignInCommand;
 import com.kdh.signin.auth.application.port.in.SignUpCommand;
 import com.kdh.signin.auth.domain.*;
 import com.kdh.signin.auth.domain.User.UserId;
+import com.kdh.signin.common.BadRequestException;
 import com.kdh.signin.common.JwtHelper;
 import com.kdh.signin.common.UseCase;
 import lombok.RequiredArgsConstructor;
@@ -67,11 +69,21 @@ public class AccountService implements AccountUseCase {
     }
 
     @Override
-    public void resetPassword(String key) {
+    @Transactional
+    public void resetPassword(ResetPasswordCommand command) {
+        Phone phone = command.getPhone();
+        Password passwordForRest = command.getPasswordForRest();
 
+        User user = adapter.findByPhone(phone);
+
+        if (user.getPassword().isSame(passwordForRest)) {
+            throw new BadRequestException("Please enter a different password than current one");
+        }
+
+        adapter.updatePassword(user, passwordForRest);
     }
 
     private void throwIfPasswordNotMatched(Password pwFromDb, Password pwFromRequest) {
-        pwFromDb.verified(pwFromRequest);
+        pwFromDb.isSame(pwFromRequest);
     }
 }
