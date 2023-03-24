@@ -29,7 +29,7 @@ class AccountMapper {
             .password(new Password(entity.getPassword()))
             .name(new Name(entity.getName()))
             .nickName(new NickName(entity.getNickName()))
-            .phone(Phone.of(CipherHelper.decrypt(entity.getPhoneNumber())))
+            .phone(Phone.of(entity.getPhoneNumber()))
             .build();
     }
 }

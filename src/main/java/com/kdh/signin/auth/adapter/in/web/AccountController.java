@@ -1,16 +1,16 @@
 package com.kdh.signin.auth.adapter.in.web;
 
+import com.kdh.signin.auth.application.port.in.AccountUseCase;
 import com.kdh.signin.auth.application.port.in.SignInCommand;
 import com.kdh.signin.auth.application.port.in.SignUpCommand;
 import com.kdh.signin.auth.application.port.out.PhoneVerifyResponse;
-import com.kdh.signin.auth.application.port.service.AccountService;
 import com.kdh.signin.auth.application.port.service.VerifyPhoneMockService;
 import com.kdh.signin.auth.domain.*;
+import com.kdh.signin.common.BadRequestException;
+import com.kdh.signin.common.JwtHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author han
@@ -22,7 +22,7 @@ public class AccountController {
 
     private final VerifyPhoneMockService phoneService;
 
-    private final AccountService accountService;
+    private final AccountUseCase accountService;
 
     @PostMapping(value = "auth/phone")
     public ResponseEntity<PhoneVerifyResponse> checkPhoneNumber(@RequestBody String phoneNumber) {
@@ -66,5 +66,31 @@ public class AccountController {
             .build();
 
         return ResponseEntity.ok(accountService.signIn(command));
+    }
+
+    @GetMapping(value = "auth/info/{id}")
+    public ResponseEntity<UserInfoResponse> info(@RequestHeader(value = "x-auth-token") String token,
+        @PathVariable(value = "id") Long id) {
+
+        if (token == null || token.isEmpty()) {
+            throw new BadRequestException("로그인한 유저만 접근할 수 있습니다");
+        }
+
+        User decode = JwtHelper.decode(token);
+
+        if (!decode.getId().getId().equals(id)) {
+            throw new BadRequestException("자기 자신의 정보만 조회할 수 있습니다.");
+        }
+
+        User info = accountService.findMyInfo(decode.getId());
+
+        UserInfoResponse response = UserInfoResponse.builder()
+            .email(info.getEmail())
+            .nickName(info.getNickName())
+            .phoneNumber(info.getPhone())
+            .name(info.getName())
+            .build();
+
+        return ResponseEntity.ok(response);
     }
 }

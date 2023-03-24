@@ -43,6 +43,15 @@ public class AccountPersistenceAdapter {
         return mapper.mapToDomain(firstByPhoneNumber.get());
     }
 
+    public User findById (long id) {
+        Optional<AccountJpaEntity> byId = repository.findById(id);
+
+        if (byId.isEmpty()) {
+            throw new NoSuchElementException("There is no user");
+        }
+        return mapper.mapToDomain(byId.get());
+    }
+
     public boolean isNotSignUp(Email email, Phone phone) {
         return !isSignUp(email, phone);
     }
