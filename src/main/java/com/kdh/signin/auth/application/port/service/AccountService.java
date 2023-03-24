@@ -50,7 +50,7 @@ public class AccountService implements AccountUseCase {
 
         Password password = command.getPassword();
 
-        if (phone.equals(Phone.NULL_OBJECT)) {
+        if (Phone.NULL_OBJECT.equals(phone)) {
             User user = adapter.findByEmail(email);
             throwIfPasswordNotMatched(user.getPassword(), password);
             return JwtHelper.encode(user);
@@ -84,6 +84,8 @@ public class AccountService implements AccountUseCase {
     }
 
     private void throwIfPasswordNotMatched(Password pwFromDb, Password pwFromRequest) {
-        pwFromDb.isSame(pwFromRequest);
+        if (pwFromDb.isNotSame(pwFromRequest)) {
+            throw new BadRequestException("Wrong password");
+        }
     }
 }
