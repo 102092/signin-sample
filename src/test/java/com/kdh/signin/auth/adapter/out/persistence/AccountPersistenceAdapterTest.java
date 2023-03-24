@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -57,5 +59,13 @@ class AccountPersistenceAdapterTest {
         User byPhone = adapter.findByPhone(phone);
 
         assertEquals(byEmail.getId(), byPhone.getId());
+    }
+
+    @Test
+    void throwExceptionIfNotExist() {
+        adapter.save(email, nickName, password, name, phone);
+
+        assertThrows(NoSuchElementException.class, () -> adapter.findByEmail(new Email("notexist@gmail.com")));
+        assertThrows(NoSuchElementException.class, () -> adapter.findByPhone(new Phone("010-9889-1234")));
     }
 }
