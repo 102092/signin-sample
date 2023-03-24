@@ -16,12 +16,20 @@ public class Password {
         this.value = validate(password);
     }
 
+    public static Password decryptFrom(String encryptPassword) {
+        return new Password(CipherHelper.decrypt(encryptPassword));
+    }
+
     private String validate(String password) {
         if (password == null || password.isEmpty()) {
             throw new IllegalArgumentException("Password can not be null or empty");
         }
 
         return password;
+    }
+
+    public boolean isNotSame(Password password) {
+        return !isSame(password);
     }
 
     public boolean isSame(Password password) {

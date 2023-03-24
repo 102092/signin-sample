@@ -2,7 +2,6 @@ package com.kdh.signin.auth.domain;
 
 
 import com.kdh.signin.common.CipherHelper;
-import lombok.EqualsAndHashCode;
 import lombok.Value;
 
 
@@ -22,8 +21,12 @@ public class Phone implements Identifier {
         this.value = value;
     }
 
-    public static Phone of(String encryptedValue) {
-        return new Phone(encryptedValue);
+    public static Phone decryptFrom(String encryptedValue) {
+        String decrypt = CipherHelper.decrypt(encryptedValue);
+        if (decrypt.isEmpty()) {
+            throw new IllegalArgumentException("phone decrypt string should not be empty");
+        }
+        return new Phone(decrypt);
     }
 
     @Override
