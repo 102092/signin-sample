@@ -1,4 +1,4 @@
-package com.kdh.signin.auth.adapter.in.web;
+package com.kdh.signin.auth.adapter.out.web;
 
 import lombok.Getter;
 

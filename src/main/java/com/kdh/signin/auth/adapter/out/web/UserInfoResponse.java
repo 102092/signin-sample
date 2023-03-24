@@ -1,4 +1,4 @@
-package com.kdh.signin.auth.adapter.in.web;
+package com.kdh.signin.auth.adapter.out.web;
 
 import com.kdh.signin.auth.domain.Email;
 import com.kdh.signin.auth.domain.Name;
