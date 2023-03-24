@@ -1,6 +1,5 @@
 package com.kdh.signin.auth.domain;
 
-import com.kdh.signin.common.CipherHelper;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -12,10 +11,10 @@ import lombok.Getter;
 @EqualsAndHashCode
 public class Password {
 
-    private final String encryptedValue;
+    private final String value;
 
     public Password(String password) {
-        this.encryptedValue = validate(password);
+        this.value = validate(password);
     }
 
     private String validate(String password) {
@@ -23,13 +22,7 @@ public class Password {
             throw new IllegalArgumentException("Password can not be null or empty");
         }
 
-        String encrypt = CipherHelper.encrypt(password);
-
-        if (encrypt.isEmpty()) {
-            throw new IllegalArgumentException("Encrypt string can not be empty");
-        }
-
-        return encrypt;
+        return password;
     }
 
     public boolean verified(Password password) {
@@ -37,6 +30,6 @@ public class Password {
             throw new IllegalArgumentException("Password can not be null");
         }
 
-        return this.encryptedValue.equals(password.encryptedValue);
+        return this.value.equals(password.value);
     }
 }

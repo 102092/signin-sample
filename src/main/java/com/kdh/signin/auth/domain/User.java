@@ -1,9 +1,6 @@
 package com.kdh.signin.auth.domain;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Value;
+import lombok.*;
 
 /**
  * @author han
@@ -11,6 +8,8 @@ import lombok.Value;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode(of = "id")
+@Builder
 public class User {
 
     private final UserId id;
@@ -40,9 +39,8 @@ public class User {
      */
     private final Phone phone;
 
-
     @Value
-    private static class UserId {
+    public static class UserId {
         Long id;
     }
 }

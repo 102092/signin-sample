@@ -1,25 +1,22 @@
 package com.kdh.signin.auth.domain;
 
+import lombok.EqualsAndHashCode;
+
 import java.util.regex.Pattern;
 
 /**
  * @author han
  */
-public class Email implements Identifier{
 
-    private final static Pattern pattern  = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+@EqualsAndHashCode
+public class Email implements Identifier {
+
+    public static final Email NULL_OBJECT = new Email("null@null.com");
 
     private final String value;
 
     public Email(String value) {
-        this.value = validate(value);
-    }
-
-    private String validate(String value) {
-        if (pattern.matcher(value).matches()) {
-            return value;
-        }
-        throw new IllegalArgumentException("Email seems not valid");
+        this.value = value;
     }
 
     @Override

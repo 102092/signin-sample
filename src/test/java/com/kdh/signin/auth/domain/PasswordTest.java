@@ -21,10 +21,11 @@ class PasswordTest {
         Password test = new Password("test");
 
         //when
-        String decrypt = CipherHelper.decrypt(test.getEncryptedValue());
+        String encrypt = CipherHelper.encrypt(test.getValue());
+        String decrypt = CipherHelper.decrypt(encrypt);
 
         //then
-        assertEquals("test", decrypt);
+        assertEquals(test, new Password(decrypt));
     }
 
 }
