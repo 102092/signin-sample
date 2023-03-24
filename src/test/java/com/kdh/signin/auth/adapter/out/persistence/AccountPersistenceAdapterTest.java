@@ -82,7 +82,7 @@ class AccountPersistenceAdapterTest {
 
         //when
         adapter.updatePassword(user, changed);
-        em.clear();
+        em.clear(); // for select
 
         //then
         User byEmail = adapter.findByEmail(email);
