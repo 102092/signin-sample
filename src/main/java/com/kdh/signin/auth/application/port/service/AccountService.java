@@ -2,14 +2,15 @@ package com.kdh.signin.auth.application.port.service;
 
 import com.kdh.signin.auth.adapter.out.persistence.AccountPersistenceAdapter;
 import com.kdh.signin.auth.application.port.in.AccountUseCase;
+import com.kdh.signin.auth.application.port.in.SignInCommand;
 import com.kdh.signin.auth.application.port.in.SignUpCommand;
-import com.kdh.signin.auth.domain.Email;
-import com.kdh.signin.auth.domain.Identifier;
-import com.kdh.signin.auth.domain.Phone;
-import com.kdh.signin.auth.domain.User;
+import com.kdh.signin.auth.domain.*;
+import com.kdh.signin.common.JwtHelper;
 import com.kdh.signin.common.UseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.NoSuchElementException;
 
 /**
  * @author han
@@ -35,6 +36,30 @@ public class AccountService implements AccountUseCase {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public String signIn(SignInCommand command) {
+        Phone phone = command.getPhone();
+        Email email = command.getEmail();
+
+        if (adapter.isNotSignUp(email, phone)) {
+            throw new NoSuchElementException("There is no user matched by email {" + email.getUniqueValue() + "}" + " or phone {" + phone.getUniqueValue() + "}");
+        }
+
+        Password password = command.getPassword();
+
+        if (phone.equals(Phone.NULL_OBJECT)) {
+            User user = adapter.findByEmail(email);
+            throwIfPasswordNotMatched(user.getPassword(), password);
+            return JwtHelper.encode(user);
+        }
+
+        User user = adapter.findByPhone(phone);
+        throwIfPasswordNotMatched(user.getPassword(), password);
+
+        return JwtHelper.encode(user);
+    }
+
+    @Override
     public User findMyInfo(Identifier identifier) {
         return null;
     }
@@ -42,5 +67,9 @@ public class AccountService implements AccountUseCase {
     @Override
     public void resetPassword(String key) {
 
+    }
+
+    private void throwIfPasswordNotMatched(Password pwFromDb, Password pwFromRequest) {
+        pwFromDb.verified(pwFromRequest);
     }
 }

@@ -15,10 +15,18 @@ public interface AccountUseCase {
     Long signUp(SignUpCommand command);
 
     /**
+     * @param command
+     * @return jwtString (with id)
+     */
+    String signIn(SignInCommand command);
+
+    /**
      * @param identifier
      * @return
      */
     User findMyInfo(Identifier identifier);
 
     void resetPassword(String key);
+
+
 }
