@@ -1,5 +1,6 @@
 package com.kdh.signin.auth.adapter.in.web;
 
+import com.kdh.signin.auth.application.port.in.SignInCommand;
 import com.kdh.signin.auth.application.port.in.SignUpCommand;
 import com.kdh.signin.auth.application.port.out.PhoneVerifyResponse;
 import com.kdh.signin.auth.application.port.service.AccountService;
@@ -34,7 +35,7 @@ public class AccountController {
         NickName nickName = new NickName(request.getNickName());
         Password password = new Password(request.getPassword());
         Name name = new Name(request.getName());
-        Phone phone = new Phone(request.getPhoneNumber());
+        Phone phone = Phone.of(request.getPhoneNumber());
 
         SignUpCommand command = SignUpCommand.builder()
             .email(email)
@@ -50,5 +51,20 @@ public class AccountController {
         }
 
         return ResponseEntity.ok(String.valueOf(accountService.signUp(command)));
+    }
+
+    @PostMapping(value = "auth/signin")
+    public ResponseEntity<String> sigin(@RequestBody SigninRequest request) {
+        Email email = request.getEmail() == null ? Email.NULL_OBJECT : new Email(request.getEmail());
+        Password password = new Password(request.getPassword());
+        Phone phone = request.getPhoneNumber() == null ? Phone.NULL_OBJECT : new Phone(request.getPhoneNumber());
+
+        SignInCommand command = SignInCommand.builder()
+            .email(email)
+            .password(password)
+            .phone(phone)
+            .build();
+
+        return ResponseEntity.ok(accountService.signIn(command));
     }
 }

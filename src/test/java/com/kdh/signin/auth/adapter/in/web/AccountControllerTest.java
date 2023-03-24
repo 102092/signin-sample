@@ -1,6 +1,7 @@
 package com.kdh.signin.auth.adapter.in.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kdh.signin.auth.application.port.in.SignInCommand;
 import com.kdh.signin.auth.application.port.service.AccountService;
 import com.kdh.signin.auth.application.port.service.VerifyPhoneMockService;
 import org.junit.jupiter.api.Test;
@@ -59,6 +60,20 @@ class AccountControllerTest {
         mockMvc.perform(post("/auth/signup")
                 .header("Content-Type", "application/json")
                 .content(objectMapper.writeValueAsString(signUpRequest)))
+            .andExpect(
+                status().isOk());
+    }
+
+    @Test
+    void signInSuccess() throws Exception {
+
+        given(authService.signIn(any(SignInCommand.class))).willReturn("jwttoken");
+
+        SigninRequest request = new SigninRequest("test@gmail.com", "010-1234-5678", "password");
+
+        mockMvc.perform(post("/auth/signin")
+                .header("Content-Type", "application/json")
+                .content(objectMapper.writeValueAsString(request)))
             .andExpect(
                 status().isOk());
     }
