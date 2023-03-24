@@ -80,8 +80,9 @@ class AccountControllerTest {
         mockMvc.perform(post("/auth/signin")
                 .header("Content-Type", "application/json")
                 .content(objectMapper.writeValueAsString(request)))
-            .andExpect(
-                status().isOk());
+            .andExpectAll(
+                status().isOk(),
+                jsonPath("$.token").value("jwttoken"));
     }
 
     @Test
@@ -114,8 +115,12 @@ class AccountControllerTest {
         mockMvc.perform(get("/auth/info/{id}", 1L)
                 .header("Content-Type", "application/json")
                 .header("x-auth-token", code))
-            .andExpect(
-                status().isOk());
+            .andExpectAll(
+                status().isOk(),
+                jsonPath("$.email").value( "test@gmail.com"),
+                jsonPath("$.nick_name").value( "nickname"),
+                jsonPath("$.phone_number").value( "010-1234-4567"),
+                jsonPath("$.name").value("name"));
     }
 
     @Test

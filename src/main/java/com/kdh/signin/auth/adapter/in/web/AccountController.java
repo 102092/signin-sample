@@ -55,7 +55,7 @@ public class AccountController {
     }
 
     @PostMapping(value = "auth/signin")
-    public ResponseEntity<String> sigin(@RequestBody SigninRequest request) {
+    public ResponseEntity<SigninResponse> sigin(@RequestBody SigninRequest request) {
         Email email = request.getEmail() == null ? Email.NULL_OBJECT : new Email(request.getEmail());
         Password password = new Password(request.getPassword());
         Phone phone = request.getPhoneNumber() == null ? Phone.NULL_OBJECT : new Phone(request.getPhoneNumber());
@@ -66,7 +66,7 @@ public class AccountController {
             .phone(phone)
             .build();
 
-        return ResponseEntity.ok(accountService.signIn(command));
+        return ResponseEntity.ok(new SigninResponse(accountService.signIn(command)));
     }
 
     @GetMapping(value = "auth/info/{id}")
