@@ -1,7 +1,6 @@
 package com.kdh.signin.auth.adapter.out.persistence;
 
 import com.kdh.signin.auth.domain.*;
-import com.kdh.signin.common.CipherHelper;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,7 +28,7 @@ class AccountMapper {
             .password(new Password(entity.getPassword()))
             .name(new Name(entity.getName()))
             .nickName(new NickName(entity.getNickName()))
-            .phone(Phone.of(entity.getPhoneNumber()))
+            .phone(new Phone(entity.getPhoneNumber()))
             .build();
     }
 }

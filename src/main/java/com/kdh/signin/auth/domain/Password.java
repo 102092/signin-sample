@@ -1,17 +1,16 @@
 package com.kdh.signin.auth.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import com.kdh.signin.common.CipherHelper;
+import lombok.Value;
 
 /**
  * @author han
  */
 
-@Getter
-@EqualsAndHashCode
+@Value
 public class Password {
 
-    private final String value;
+    String value;
 
     public Password(String password) {
         this.value = validate(password);
@@ -25,11 +24,15 @@ public class Password {
         return password;
     }
 
-    public boolean verified(Password password) {
+    public boolean isSame(Password password) {
         if (password == null) {
             throw new IllegalArgumentException("Password can not be null");
         }
 
         return this.value.equals(password.value);
+    }
+
+    public String getEncryptValue() {
+        return CipherHelper.encrypt(this.value);
     }
 }

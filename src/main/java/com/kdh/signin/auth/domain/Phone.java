@@ -1,21 +1,22 @@
 package com.kdh.signin.auth.domain;
 
 
+import com.kdh.signin.common.CipherHelper;
 import lombok.EqualsAndHashCode;
+import lombok.Value;
 
-import java.util.regex.Pattern;
 
 /**
  * 전화번호
  * @author han
  */
 
-@EqualsAndHashCode
+@Value
 public class Phone implements Identifier {
 
     public static final Phone NULL_OBJECT = new Phone("-1");
 
-    private final String value;
+    String value;
 
     public Phone(String value) {
         this.value = value;
@@ -28,5 +29,9 @@ public class Phone implements Identifier {
     @Override
     public String getUniqueValue() {
         return this.value;
+    }
+
+    public String getEncryptValue() {
+        return CipherHelper.encrypt(this.value);
     }
 }

@@ -36,7 +36,7 @@ public class AccountController {
         NickName nickName = new NickName(request.getNickName());
         Password password = new Password(request.getPassword());
         Name name = new Name(request.getName());
-        Phone phone = Phone.of(request.getPhoneNumber());
+        Phone phone = new Phone(request.getPhoneNumber());
 
         SignUpCommand command = SignUpCommand.builder()
             .email(email)

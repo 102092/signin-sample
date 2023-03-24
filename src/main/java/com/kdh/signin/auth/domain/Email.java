@@ -1,19 +1,17 @@
 package com.kdh.signin.auth.domain;
 
-import lombok.EqualsAndHashCode;
-
-import java.util.regex.Pattern;
+import lombok.Value;
 
 /**
  * @author han
  */
 
-@EqualsAndHashCode
+@Value
 public class Email implements Identifier {
 
     public static final Email NULL_OBJECT = new Email("null@null.com");
 
-    private final String value;
+    String value;
 
     public Email(String value) {
         this.value = value;

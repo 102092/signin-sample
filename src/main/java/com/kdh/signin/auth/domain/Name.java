@@ -1,15 +1,15 @@
 package com.kdh.signin.auth.domain;
 
-import lombok.Getter;
+import lombok.Value;
 
 /**
  * @author han
  */
 
-@Getter
+@Value
 public class Name {
 
-    private final String value;
+    String value;
 
     public Name(String value) {
         this.value = value;
