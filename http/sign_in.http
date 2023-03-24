@@ -1,9 +1,17 @@
-### sign in
+### sign in with email
 POST http://localhost:8085/auth/signin
 Content-Type: application/json
 
 {
   "email": "test@gmail.com",
+  "password" : "password"
+}
+
+### sign in with password
+POST http://localhost:8085/auth/signin
+Content-Type: application/json
+
+{
   "password" : "password",
   "phone_number" : "010-1234-5678"
 }
