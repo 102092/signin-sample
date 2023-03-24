@@ -13,11 +13,11 @@ public class ResetPasswordRequest {
 
     private final String token;
 
-    private final String passwordForRest;
+    private final String password;
 
-    public ResetPasswordRequest(String phoneNumber, String token, String passwordForRest) {
+    public ResetPasswordRequest(String phoneNumber, String token, String password) {
         this.phoneNumber = phoneNumber;
         this.token = token;
-        this.passwordForRest = passwordForRest;
+        this.password = password;
     }
 }

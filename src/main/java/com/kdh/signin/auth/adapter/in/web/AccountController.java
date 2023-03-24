@@ -1,10 +1,12 @@
 package com.kdh.signin.auth.adapter.in.web;
 
+import com.kdh.signin.auth.adapter.out.web.SigninResponse;
+import com.kdh.signin.auth.adapter.out.web.UserInfoResponse;
 import com.kdh.signin.auth.application.port.in.AccountUseCase;
 import com.kdh.signin.auth.application.port.in.ResetPasswordCommand;
 import com.kdh.signin.auth.application.port.in.SignInCommand;
 import com.kdh.signin.auth.application.port.in.SignUpCommand;
-import com.kdh.signin.auth.application.port.out.PhoneVerifyResponse;
+import com.kdh.signin.auth.adapter.out.web.PhoneVerifyResponse;
 import com.kdh.signin.auth.application.port.service.VerifyPhoneMockService;
 import com.kdh.signin.auth.domain.*;
 import com.kdh.signin.common.BadRequestException;
@@ -73,13 +75,14 @@ public class AccountController {
     public ResponseEntity<UserInfoResponse> info(@RequestHeader(value = "x-auth-token") String token, @PathVariable(value = "id") Long id) {
 
         if (token == null || token.isEmpty()) {
-            throw new BadRequestException("로그인한 유저만 접근할 수 있습니다");
+            throw new BadRequestException("Only logged-in users can access it");
         }
 
         User decode = JwtHelper.decode(token);
 
-        if (!decode.getId().getId().equals(id)) {
-            throw new BadRequestException("자기 자신의 정보만 조회할 수 있습니다.");
+        boolean isNotSameUser = !decode.getId().getId().equals(id);
+        if (isNotSameUser) {
+            throw new BadRequestException("You can only view your own information");
         }
 
         User info = accountService.findMyInfo(decode.getId());
@@ -102,7 +105,7 @@ public class AccountController {
         }
 
         Phone phone = new Phone(request.getPhoneNumber());
-        Password password = new Password(request.getPasswordForRest());
+        Password password = new Password(request.getPassword());
         ResetPasswordCommand command = new ResetPasswordCommand(phone, password);
         accountService.resetPassword(command);
 
