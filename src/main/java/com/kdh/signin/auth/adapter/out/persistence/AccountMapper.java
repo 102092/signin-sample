@@ -15,9 +15,9 @@ class AccountMapper {
         return AccountJpaEntity.builder()
             .email(email.getUniqueValue())
             .nickName(nickName.getValue())
-            .password(password.getValue())
+            .password(password.getEncryptValue())
             .name(name.getValue())
-            .phoneNumber(phone.getUniqueValue())
+            .phoneNumber(phone.getEncryptValue())
             .build();
     }
 
@@ -25,10 +25,10 @@ class AccountMapper {
         return User.builder()
             .id(new User.UserId(entity.getId()))
             .email(new Email(entity.getEmail()))
-            .password(new Password(entity.getPassword()))
+            .password(Password.decryptFrom(entity.getPassword()))
             .name(new Name(entity.getName()))
             .nickName(new NickName(entity.getNickName()))
-            .phone(new Phone(entity.getPhoneNumber()))
+            .phone(Phone.decryptFrom(entity.getPhoneNumber()))
             .build();
     }
 }

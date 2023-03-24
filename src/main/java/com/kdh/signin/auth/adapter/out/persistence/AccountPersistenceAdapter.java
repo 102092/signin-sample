@@ -34,7 +34,7 @@ public class AccountPersistenceAdapter {
     }
 
     public User findByPhone(Phone phone) {
-        Optional<AccountJpaEntity> firstByPhoneNumber = repository.findFirstByPhoneNumber(phone.getUniqueValue());
+        Optional<AccountJpaEntity> firstByPhoneNumber = repository.findFirstByPhoneNumber(phone.getEncryptValue());
 
         if (firstByPhoneNumber.isEmpty()) {
             throw new NoSuchElementException("There is no user from {" + phone.getUniqueValue() + "}");
@@ -57,10 +57,10 @@ public class AccountPersistenceAdapter {
     }
 
     public boolean isSignUp(Email email, Phone phone) {
-        return repository.countByEmailOrPhoneNumber(email.getUniqueValue(), phone.getUniqueValue()) > 0;
+        return repository.countByEmailOrPhoneNumber(email.getUniqueValue(), phone.getEncryptValue()) > 0;
     }
 
     public void updatePassword(User user, Password password) {
-        repository.updatePassword(password.getValue(), user.getId().getId());
+        repository.updatePassword(password.getEncryptValue(), user.getId().getId());
     }
 }
