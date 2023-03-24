@@ -1,6 +1,5 @@
 package com.kdh.signin.auth.application.port.in;
 
-import com.kdh.signin.auth.domain.Identifier;
 import com.kdh.signin.auth.domain.User;
 
 /**
@@ -21,10 +20,10 @@ public interface AccountUseCase {
     String signIn(SignInCommand command);
 
     /**
-     * @param identifier
+     * @param User.UserId
      * @return
      */
-    User findMyInfo(Identifier identifier);
+    User findMyInfo(User.UserId id);
 
     void resetPassword(String key);
 

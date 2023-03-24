@@ -5,6 +5,7 @@ import com.kdh.signin.auth.application.port.in.AccountUseCase;
 import com.kdh.signin.auth.application.port.in.SignInCommand;
 import com.kdh.signin.auth.application.port.in.SignUpCommand;
 import com.kdh.signin.auth.domain.*;
+import com.kdh.signin.auth.domain.User.UserId;
 import com.kdh.signin.common.JwtHelper;
 import com.kdh.signin.common.UseCase;
 import lombok.RequiredArgsConstructor;
@@ -60,8 +61,9 @@ public class AccountService implements AccountUseCase {
     }
 
     @Override
-    public User findMyInfo(Identifier identifier) {
-        return null;
+    @Transactional(readOnly = true)
+    public User findMyInfo(UserId id) {
+        return adapter.findById(id.getId());
     }
 
     @Override
