@@ -2,6 +2,7 @@ package com.kdh.signin.auth.adapter.in.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kdh.signin.auth.application.port.in.AccountUseCase;
+import com.kdh.signin.auth.application.port.in.ResetPasswordCommand;
 import com.kdh.signin.auth.application.port.in.SignInCommand;
 import com.kdh.signin.auth.application.port.service.VerifyPhoneMockService;
 import com.kdh.signin.auth.domain.*;
@@ -14,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -114,5 +116,34 @@ class AccountControllerTest {
                 .header("x-auth-token", code))
             .andExpect(
                 status().isOk());
+    }
+
+    @Test
+    void throwExceptionWhenTokenIsNotValid() throws Exception {
+        ResetPasswordRequest resetPasswordRequest = new ResetPasswordRequest("010-1234-5678", "", "123");
+
+        given(phoneService.verifyToken(any(String.class))).willReturn(Boolean.FALSE);
+
+        mockMvc.perform(post("/auth/reset")
+                .header("Content-Type", "application/json")
+                .content(objectMapper.writeValueAsString(resetPasswordRequest)))
+            .andExpect(
+                status().is4xxClientError());
+    }
+
+    @Test
+    void resetPasswordSuccess() throws Exception {
+        ResetPasswordRequest resetPasswordRequest = new ResetPasswordRequest("010-1234-5678", "", "123");
+
+        given(phoneService.verifyToken(any(String.class))).willReturn(Boolean.TRUE);
+
+        mockMvc.perform(post("/auth/reset")
+                .header("Content-Type", "application/json")
+                .content(objectMapper.writeValueAsString(resetPasswordRequest)))
+            .andExpect(
+                status().isOk());
+
+        verify(accountUseCase, atLeastOnce())
+            .resetPassword(any(ResetPasswordCommand.class));
     }
 }

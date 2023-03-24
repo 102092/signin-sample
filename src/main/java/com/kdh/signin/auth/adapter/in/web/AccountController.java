@@ -1,6 +1,7 @@
 package com.kdh.signin.auth.adapter.in.web;
 
 import com.kdh.signin.auth.application.port.in.AccountUseCase;
+import com.kdh.signin.auth.application.port.in.ResetPasswordCommand;
 import com.kdh.signin.auth.application.port.in.SignInCommand;
 import com.kdh.signin.auth.application.port.in.SignUpCommand;
 import com.kdh.signin.auth.application.port.out.PhoneVerifyResponse;
@@ -69,8 +70,7 @@ public class AccountController {
     }
 
     @GetMapping(value = "auth/info/{id}")
-    public ResponseEntity<UserInfoResponse> info(@RequestHeader(value = "x-auth-token") String token,
-        @PathVariable(value = "id") Long id) {
+    public ResponseEntity<UserInfoResponse> info(@RequestHeader(value = "x-auth-token") String token, @PathVariable(value = "id") Long id) {
 
         if (token == null || token.isEmpty()) {
             throw new BadRequestException("로그인한 유저만 접근할 수 있습니다");
@@ -92,5 +92,20 @@ public class AccountController {
             .build();
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping(value = "auth/reset")
+    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequest request) {
+
+        if (!phoneService.verifyToken(request.getToken())) {
+            throw new IllegalArgumentException("This token is not valid");
+        }
+
+        Phone phone = new Phone(request.getPhoneNumber());
+        Password password = new Password(request.getPasswordForRest());
+        ResetPasswordCommand command = new ResetPasswordCommand(phone, password);
+        accountService.resetPassword(command);
+
+        return ResponseEntity.ok("Reset completed. Please re-login");
     }
 }
