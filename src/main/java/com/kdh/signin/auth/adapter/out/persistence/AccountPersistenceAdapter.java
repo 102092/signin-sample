@@ -59,4 +59,8 @@ public class AccountPersistenceAdapter {
     public boolean isSignUp(Email email, Phone phone) {
         return repository.countByEmailOrPhoneNumber(email.getUniqueValue(), phone.getUniqueValue()) > 0;
     }
+
+    public void updatePassword(User user, Password password) {
+        repository.updatePassword(password.getValue(), user.getId().getId());
+    }
 }

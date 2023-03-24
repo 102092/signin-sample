@@ -1,6 +1,7 @@
 package com.kdh.signin.auth.adapter.out.persistence;
 
 import com.kdh.signin.auth.domain.*;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -29,6 +30,9 @@ class AccountPersistenceAdapterTest {
 
     @Autowired
     AccountRepository repository;
+
+    @Autowired
+    EntityManager em;
 
     Email email = new Email("email@gmail.com");
     Password password = new Password("password");
@@ -67,5 +71,21 @@ class AccountPersistenceAdapterTest {
 
         assertThrows(NoSuchElementException.class, () -> adapter.findByEmail(new Email("notexist@gmail.com")));
         assertThrows(NoSuchElementException.class, () -> adapter.findByPhone(new Phone("010-9889-1234")));
+    }
+
+    @Test
+    void updatePassword() {
+        //given
+        adapter.save(email, nickName, password, name, phone);
+        User user = adapter.findByPhone(phone);
+        Password changed = new Password("changed");
+
+        //when
+        adapter.updatePassword(user, changed);
+        em.clear();
+
+        //then
+        User byEmail = adapter.findByEmail(email);
+        assertEquals(changed, byEmail.getPassword());
     }
 }

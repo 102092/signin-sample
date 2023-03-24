@@ -25,7 +25,6 @@ public interface AccountUseCase {
      */
     User findMyInfo(User.UserId id);
 
-    void resetPassword(String key);
-
+    void resetPassword(ResetPasswordCommand command);
 
 }
