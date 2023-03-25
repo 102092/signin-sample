@@ -18,7 +18,14 @@ public class Phone implements Identifier {
     String value;
 
     public Phone(String value) {
-        this.value = value;
+        this.value = validate(value);
+    }
+
+    private String validate(String value) {
+        if (value == null || value.isEmpty()) {
+            throw new IllegalArgumentException("Phone can not be null or empty");
+        }
+        return value;
     }
 
     public static Phone decryptFrom(String encryptedValue) {

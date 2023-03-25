@@ -21,15 +21,20 @@ public class Email implements Identifier {
         this.value = value;
     }
 
-    public static Email of (String value) {
+    public static Email of(String value) {
         return new Email(validate(value));
     }
 
     private static String validate(String value) {
-        if (patten.matcher(value).matches()) {
-            return value;
+        if (value == null || value.isEmpty()) {
+            throw new IllegalArgumentException("Email can not be null or empty");
         }
-        throw new IllegalArgumentException("This value is not proper for email");
+
+        if (!patten.matcher(value).matches()) {
+            throw new IllegalArgumentException("This value is not proper for email");
+        }
+
+        return value;
     }
 
     @Override
