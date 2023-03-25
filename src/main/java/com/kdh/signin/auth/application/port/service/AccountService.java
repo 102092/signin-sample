@@ -32,7 +32,7 @@ public class AccountService implements AccountUseCase {
         Email email = command.getEmail();
 
         if (adapter.isSignUp(email, phone)) {
-            throw new RuntimeException("Duplicated request");
+            throw new BadRequestException("Duplicated request");
         }
 
         return adapter.save(email, command.getNickName(), command.getPassword(), command.getName(), command.getPhone());
@@ -85,7 +85,7 @@ public class AccountService implements AccountUseCase {
 
     private void throwIfPasswordNotMatched(Password pwFromDb, Password pwFromRequest) {
         if (pwFromDb.isNotSame(pwFromRequest)) {
-            throw new BadRequestException("Wrong password");
+            throw new BadRequestException("Password not matched");
         }
     }
 }
