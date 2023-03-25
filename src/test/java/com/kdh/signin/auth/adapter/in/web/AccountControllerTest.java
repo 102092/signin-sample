@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kdh.signin.auth.application.port.in.AccountUseCase;
 import com.kdh.signin.auth.application.port.in.ResetPasswordCommand;
 import com.kdh.signin.auth.application.port.in.SignInCommand;
+import com.kdh.signin.auth.application.port.in.SignUpCommand;
 import com.kdh.signin.auth.application.port.service.VerifyPhoneMockService;
 import com.kdh.signin.auth.domain.*;
 import org.junit.jupiter.api.Test;
@@ -62,12 +63,14 @@ class AccountControllerTest {
 
         SignUpRequest signUpRequest = new SignUpRequest("test@gmail.com", "hello", "name", "password", "010-1234-5678", "token");
         given(phoneService.verifyToken(any(String.class))).willReturn(Boolean.TRUE);
+        given(accountUseCase.signUp(any(SignUpCommand.class))).willReturn(1L);
 
         mockMvc.perform(post("/auth/signup")
                 .header("Content-Type", "application/json")
                 .content(objectMapper.writeValueAsString(signUpRequest)))
-            .andExpect(
-                status().isOk());
+            .andExpectAll(
+                status().isOk(),
+                jsonPath("$.id").value("1"));
     }
 
     @Test

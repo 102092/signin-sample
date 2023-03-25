@@ -1,5 +1,6 @@
 package com.kdh.signin.auth.adapter.in.web;
 
+import com.kdh.signin.auth.adapter.out.web.SignUpResponse;
 import com.kdh.signin.auth.adapter.out.web.SigninResponse;
 import com.kdh.signin.auth.adapter.out.web.UserInfoResponse;
 import com.kdh.signin.auth.application.port.in.AccountUseCase;
@@ -33,7 +34,7 @@ public class AccountController {
     }
 
     @PostMapping(value = "auth/signup")
-    public ResponseEntity<String> signUp(@RequestBody SignUpRequest request) {
+    public ResponseEntity<SignUpResponse> signUp(@RequestBody SignUpRequest request) {
         Email email = new Email(request.getEmail());
         NickName nickName = new NickName(request.getNickName());
         Password password = new Password(request.getPassword());
@@ -53,7 +54,7 @@ public class AccountController {
             throw new IllegalArgumentException("This token is not valid");
         }
 
-        return ResponseEntity.ok(String.valueOf(accountService.signUp(command)));
+        return ResponseEntity.ok(new SignUpResponse(accountService.signUp(command)));
     }
 
     @PostMapping(value = "auth/signin")
