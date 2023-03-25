@@ -12,6 +12,7 @@ import com.kdh.signin.auth.application.port.service.VerifyPhoneMockService;
 import com.kdh.signin.auth.domain.*;
 import com.kdh.signin.common.error.BadRequestException;
 import com.kdh.signin.common.JwtHelper;
+import com.kdh.signin.common.error.UnauthorizedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -76,7 +77,7 @@ public class AccountController {
     public ResponseEntity<UserInfoResponse> info(@RequestHeader(value = "x-auth-token") String token, @PathVariable(value = "id") Long id) {
 
         if (token == null || token.isEmpty()) {
-            throw new BadRequestException("Only logged-in users can access it");
+            throw new UnauthorizedException("Only logged-in users can access it");
         }
 
         User decode = JwtHelper.decode(token);

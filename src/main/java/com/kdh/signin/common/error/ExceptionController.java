@@ -1,10 +1,11 @@
 package com.kdh.signin.common.error;
 
-import com.kdh.signin.common.error.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.NoSuchElementException;
 
 /**
  * @author han
@@ -17,8 +18,13 @@ public class ExceptionController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     }
 
-    @ExceptionHandler({IllegalArgumentException.class, BadRequestException.class})
-    public ResponseEntity<Object> handle4xxError(Exception ex) {
+    @ExceptionHandler({UnauthorizedException.class})
+    public ResponseEntity<Object> handle401Error(Exception ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+    }
+
+    @ExceptionHandler({IllegalArgumentException.class, BadRequestException.class, NoSuchElementException.class})
+    public ResponseEntity<Object> handle400Error(Exception ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }
