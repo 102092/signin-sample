@@ -32,7 +32,7 @@ public class AccountService implements AccountUseCase {
         Email email = command.getEmail();
 
         if (adapter.isSignUp(email, phone)) {
-            throw new BadRequestException("Duplicated request");
+            throw new BadRequestException("Request email or phone already already registered");
         }
 
         return adapter.save(email, command.getNickName(), command.getPassword(), command.getName(), command.getPhone());
@@ -45,7 +45,7 @@ public class AccountService implements AccountUseCase {
         Email email = command.getEmail();
 
         if (adapter.isNotSignUp(email, phone)) {
-            throw new NoSuchElementException("There is no user matched by email {" + email.getUniqueValue() + "}" + " or phone {" + phone.getUniqueValue() + "}");
+            throw new NoSuchElementException("There is no user matched by email or phone");
         }
 
         Password password = command.getPassword();
