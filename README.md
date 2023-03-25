@@ -1,4 +1,5 @@
-# signin-sample
+# 회원 가입 및 비빌번호 재설정 API
+
 
 ## 개발 프레임워크
 - java
@@ -41,13 +42,13 @@ cd signin-sample
 - [x] 비밀번호 찾기, 재설정 기능
 
 ### 문제해결
-- [x] 회원 가입 전에는 전화번호 인증이 되어야함. (전화번호 인증의 경우 mock 구현)
-    - 인증 받은 회원은 token을 받는다. (mock)
+- [x] 회원 가입 전에는 전화번호 인증이 되어야함. 
+  - 전화번호 인증의 경우, 외부 서비스를 이용한다고 가정하고, 응답을 mocking함.
+  - 외부 서비스로 부터 전화 번호 인증 받은 회원은 token을 받는다.
 - [x] 회원 가입시 받는 정보는 이메일, 닉네임, 비빌번호, 이름, 전화번호, token(인증된 전화번호)
+  - token을 기반으로, 해당 인증이 정상적인지 확인한다 (mock)
 - [x] 식별 가능한 모든 정보(이메일 or 전화번호) 로 로그인이 가능
 - [x] 로그인이 되지 않는 상태에서 비밀번호 재설정
-- [x] 전화번호 인증 후에 비밀전호 재설정이 가능해야함
-    - 전화번호 인증은 mocking
 
 ## 특별히 신경쓴 부분
 - 도메인 설계 및 프로젝트 구조
@@ -74,6 +75,9 @@ cd signin-sample
 - 응답
 
 ```json
+{
+  "id": "1"
+}
 ```
 
 - token은 phone_number에 대해 외부에서 인증받았다고 가정.
@@ -94,7 +98,9 @@ cd signin-sample
 
  - 응답
 ```json
-
+{
+  "token": "eyJhbGciOiJIUzUxMiJ9.eyJpIjoxfQ.1CHbz5rG9hIK5kOUCkfnqbIXFWEY4kIQxtuBNe4L1Ka2VQdiEtb0qjBZRrgUodRfTxP0ZoPRj5gZy2Wl81izVA"
+}
 ```
 
 > GET /auth/info/{id}
@@ -126,3 +132,7 @@ cd signin-sample
 ```
 - `token` 전화 번호 인증(mock) 받았을 경우 수령하는 토큰, auth/reset 시에도 검증함.
 
+- 응답
+```json
+"Reset completed. Please re-login"
+```
