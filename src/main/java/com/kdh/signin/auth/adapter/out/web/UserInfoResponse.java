@@ -6,22 +6,23 @@ import com.kdh.signin.auth.domain.NickName;
 import com.kdh.signin.auth.domain.Phone;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * @author han
  */
 
 @Getter
+@NoArgsConstructor
 public class UserInfoResponse {
 
-    private final String email;
+    private String email;
 
-    private final String nickName;
+    private String nickName;
 
-    private final String name;
+    private String name;
 
-    private final String phoneNumber;
-
+    private String phoneNumber;
 
     @Builder
     protected UserInfoResponse(Email email, NickName nickName, Name name, Phone phoneNumber) {
