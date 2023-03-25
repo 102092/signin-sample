@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class JwtHelperTest {
 
-    Email email = new Email("email@gmail.com");
+    Email email = Email.of("email@gmail.com");
     Password password = new Password("password");
     Name name = new Name("name");
     NickName nickName = new NickName("nickname");

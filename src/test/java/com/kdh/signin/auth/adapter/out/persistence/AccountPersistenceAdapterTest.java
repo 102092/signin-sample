@@ -34,7 +34,7 @@ class AccountPersistenceAdapterTest {
     @Autowired
     EntityManager em;
 
-    Email email = new Email("email@gmail.com");
+    Email email = Email.of("email@gmail.com");
     Password password = new Password("password");
     Name name = new Name("name");
     NickName nickName = new NickName("nickname");
@@ -69,7 +69,7 @@ class AccountPersistenceAdapterTest {
     void throwExceptionIfNotExist() {
         adapter.save(email, nickName, password, name, phone);
 
-        assertThrows(NoSuchElementException.class, () -> adapter.findByEmail(new Email("notexist@gmail.com")));
+        assertThrows(NoSuchElementException.class, () -> adapter.findByEmail(Email.of("notexist@gmail.com")));
         assertThrows(NoSuchElementException.class, () -> adapter.findByPhone(new Phone("010-9889-1234")));
     }
 

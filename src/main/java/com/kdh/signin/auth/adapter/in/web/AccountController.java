@@ -35,7 +35,7 @@ public class AccountController {
 
     @PostMapping(value = "auth/signup")
     public ResponseEntity<SignUpResponse> signUp(@RequestBody SignUpRequest request) {
-        Email email = new Email(request.getEmail());
+        Email email = Email.of(request.getEmail());
         NickName nickName = new NickName(request.getNickName());
         Password password = new Password(request.getPassword());
         Name name = new Name(request.getName());
@@ -59,7 +59,7 @@ public class AccountController {
 
     @PostMapping(value = "auth/signin")
     public ResponseEntity<SigninResponse> sigin(@RequestBody SigninRequest request) {
-        Email email = request.getEmail() == null ? Email.NULL_OBJECT : new Email(request.getEmail());
+        Email email = request.getEmail() == null ? Email.NULL_OBJECT : Email.of(request.getEmail());
         Password password = new Password(request.getPassword());
         Phone phone = request.getPhoneNumber() == null ? Phone.NULL_OBJECT : new Phone(request.getPhoneNumber());
 

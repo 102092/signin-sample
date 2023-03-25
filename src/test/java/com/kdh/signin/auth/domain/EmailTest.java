@@ -12,7 +12,11 @@ class EmailTest {
 
     @Test
     void createSuccess() {
-        assertDoesNotThrow(() -> new Email("test@gmail.com"));
+        assertDoesNotThrow(() -> Email.of("test@gmail.com"));
     }
 
+    @Test
+    void throwIfNotValid() {
+        assertThrows(IllegalArgumentException.class, () -> Email.of("test"));
+    }
 }

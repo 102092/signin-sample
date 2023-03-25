@@ -61,7 +61,7 @@ class AccountServiceTest {
         given(adapter.isNotSignUp(any(Email.class), any(Phone.class))).willReturn(Boolean.FALSE);
         given(adapter.findByEmail(any(Email.class))).willReturn(User.builder().id(new User.UserId(1L)).password(new Password("1")).build());
         given(command.getPhone()).willReturn(Phone.NULL_OBJECT);
-        given(command.getEmail()).willReturn(new Email("test@gmail.com"));
+        given(command.getEmail()).willReturn(Email.of("test@gmail.com"));
         given(command.getPassword()).willReturn(new Password("1"));
 
         // when

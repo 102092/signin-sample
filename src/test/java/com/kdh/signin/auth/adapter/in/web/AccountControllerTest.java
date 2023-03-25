@@ -109,7 +109,7 @@ class AccountControllerTest {
     @Test
     void findInfoSuccess() throws Exception {
         User u = User.builder()
-            .email(new Email("test@gmail.com"))
+            .email(Email.of("test@gmail.com"))
             .nickName(new NickName("nickname"))
             .phone(new Phone("010-1234-4567"))
             .name(new Name("name")).build();

@@ -24,7 +24,7 @@ class AccountMapper {
     User mapToDomain(AccountJpaEntity entity) {
         return User.builder()
             .id(new User.UserId(entity.getId()))
-            .email(new Email(entity.getEmail()))
+            .email(Email.of(entity.getEmail()))
             .password(Password.decryptFrom(entity.getPassword()))
             .name(new Name(entity.getName()))
             .nickName(new NickName(entity.getNickName()))
