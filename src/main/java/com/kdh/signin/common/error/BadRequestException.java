@@ -1,4 +1,4 @@
-package com.kdh.signin.common;
+package com.kdh.signin.common.error;
 
 /**
  * @author han

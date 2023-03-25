@@ -1,5 +1,6 @@
-package com.kdh.signin.common;
+package com.kdh.signin.common.error;
 
+import com.kdh.signin.common.error.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

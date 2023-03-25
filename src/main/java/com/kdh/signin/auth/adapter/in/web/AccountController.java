@@ -10,7 +10,7 @@ import com.kdh.signin.auth.application.port.in.SignUpCommand;
 import com.kdh.signin.auth.adapter.out.web.PhoneVerifyResponse;
 import com.kdh.signin.auth.application.port.service.VerifyPhoneMockService;
 import com.kdh.signin.auth.domain.*;
-import com.kdh.signin.common.BadRequestException;
+import com.kdh.signin.common.error.BadRequestException;
 import com.kdh.signin.common.JwtHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

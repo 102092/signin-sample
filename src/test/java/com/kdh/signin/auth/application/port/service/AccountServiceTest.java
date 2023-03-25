@@ -1,12 +1,11 @@
 package com.kdh.signin.auth.application.port.service;
 
 import com.kdh.signin.auth.adapter.out.persistence.AccountPersistenceAdapter;
-import com.kdh.signin.auth.application.port.in.AccountUseCase;
 import com.kdh.signin.auth.application.port.in.ResetPasswordCommand;
 import com.kdh.signin.auth.application.port.in.SignInCommand;
 import com.kdh.signin.auth.application.port.in.SignUpCommand;
 import com.kdh.signin.auth.domain.*;
-import com.kdh.signin.common.BadRequestException;
+import com.kdh.signin.common.error.BadRequestException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

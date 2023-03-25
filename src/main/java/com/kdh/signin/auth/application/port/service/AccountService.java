@@ -7,7 +7,7 @@ import com.kdh.signin.auth.application.port.in.SignInCommand;
 import com.kdh.signin.auth.application.port.in.SignUpCommand;
 import com.kdh.signin.auth.domain.*;
 import com.kdh.signin.auth.domain.User.UserId;
-import com.kdh.signin.common.BadRequestException;
+import com.kdh.signin.common.error.BadRequestException;
 import com.kdh.signin.common.JwtHelper;
 import com.kdh.signin.common.UseCase;
 import lombok.RequiredArgsConstructor;

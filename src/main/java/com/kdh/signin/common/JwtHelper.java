@@ -1,6 +1,7 @@
 package com.kdh.signin.common;
 
 import com.kdh.signin.auth.domain.*;
+import com.kdh.signin.common.error.BadRequestException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
