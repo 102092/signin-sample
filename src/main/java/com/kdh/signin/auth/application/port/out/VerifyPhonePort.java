@@ -11,5 +11,9 @@ public interface VerifyPhonePort {
      */
     String verify(String phoneNumber);
 
+    /**
+     * @param token from external service
+     * @return boolean if token is valid
+     */
     boolean verifyToken(String token);
 }

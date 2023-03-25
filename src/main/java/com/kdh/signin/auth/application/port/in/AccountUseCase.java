@@ -20,11 +20,14 @@ public interface AccountUseCase {
     String signIn(SignInCommand command);
 
     /**
-     * @param User.UserId
-     * @return
+     * @param id
+     * @return User
      */
     User findMyInfo(User.UserId id);
 
+    /**
+     * @param command
+     */
     void resetPassword(ResetPasswordCommand command);
 
 }
